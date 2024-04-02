@@ -1,4 +1,3 @@
-// Array of song objects. Add at least 5 songs with title, artist, and genre properties.
 const songs = [
     { title: "Hooked on a Feeling", artist: "Blue Swede", genre: "Pop" },
     { title: "Moonage Daydream", artist: "David Bowie", genre: "Rock" },
@@ -11,24 +10,63 @@ const songs = [
     { title: "Come and Get Your Love", artist: "Redbone", genre: "Rock" },
     { title: "I'm Not in Love", artist: "10cc", genre: "Pop" },
     { title: "Fooled Around and Fell in Love", artist: "Elvin Bishop", genre: "Rock" },
-    // Feel free to add even more songs
+    { title: "VIRGO'S GROOVE", artist: "Beyonce", genre: "R&B" },
+    { title: "King Kunta", artist: "Kendrick Lamar", genre: "Rap" }, 
+    { title: "Full Moon", artist: "Brandy", genre: "R&B" },
+    { title: "Moment", artist: "Victoria Monet", genre: "R&B" },
+    { title: "Get Ur Freak On", artist: "Missy Elliott", genre: "Rap" },
 ];
 
-
-// Object containing each Guardian's preferred genre
 const guardians = {
     "Star-Lord": "Rock",
-    "Gamora": "Pop",
-    // Add preferences for Drax, Rocket, and Groot
+    "Gamora": "R&B",
+    "Drax": "Pop",
+    "Rocket": "Rock",
+    "Groot": "Rap",
 };
 
-// Function to generate playlist based on preferred genre
 function generatePlaylist(guardians, songs) {
-    // Use the map() function to create playlists for each Guardian
-    // Your code here
+    const playlists = {};
+
+    for (const [guardian, genre] of Object.entries(guardians)) {
+        playlists[guardian] = songs.filter(song => song.genre === genre);
+    }
+
+    displayPlaylists(playlists);
 }
 
-// Call generatePlaylist and display the playlists for each Guardian
+function displayPlaylists(playlists) {
+    const playlistsContainer = document.getElementById('playlists');
+
+    for (const [guardian, playlist] of Object.entries(playlists)) {
+        const playlistElement = document.createElement('div');
+        playlistElement.classList.add('playlist');
+
+        const playlistTitle = document.createElement('h2');
+        playlistTitle.textContent = `${guardian}'s Playlist`;
+        playlistTitle.style.color = '#FFD700'; 
+        playlistElement.appendChild(playlistTitle);
+
+        const songList = document.createElement('ul');
+        for (const song of playlist) {
+            const songItem = document.createElement('li');
+            songItem.classList.add('song');
+
+            const songTitle = document.createElement('span');
+            songTitle.classList.add('song-title');
+            songTitle.textContent = `${song.title} by ${song.artist}`;
+
+            songItem.appendChild(songTitle);
+            songList.appendChild(songItem);
+        }
+
+        playlistElement.appendChild(songList);
+        playlistsContainer.appendChild(playlistElement);
+    }
+}
+
 generatePlaylist(guardians, songs);
+
+
 
 
